@@ -17,7 +17,8 @@ Micro-Footprint Compute: Peak memory scales at ~O(n^1.5). The architecture optim
 📊 Empirical Validation & Metrics
 
 The tsp_results.png included in this repository visualizes the exact scaling behaviors of the architecture across Asymmetric, Blocked, and Symmetric matrices.
-![TSP Performance Results](tsp_results.jpg)
+
+**![TSP Performance Results](tsp_results.png)**
 
 Key Benchmarks:
 
