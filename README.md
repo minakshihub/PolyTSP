@@ -55,10 +55,16 @@ Navigate to the /tests directory.
 
 Run the stress test execution script:
 
-python run_stress_test_n100.py
+tsp_stress_test_script.py
 
 
 The console will output the routing path, total exact execution time, and peak memory usage. You will observe the memory footprint remains strictly bounded regardless of hardware.
+Terminal outputs are :
+
+![TSP TERMINAL SCREENSHOT1](tsp_terminal_screenshot1.png)
+
+![TSP TERMINAL SCREENSHOT2](tsp_terminal_screenshot2.png)
+
 
 📁 Repository Structure
 
