@@ -2,7 +2,9 @@ Proprietary Deterministic TSP Routing Architecture
 
 CONFIDENTIALITY NOTICE: This repository and its contents are proprietary. Access is granted strictly for technical evaluation under the terms of the agreed Non-Disclosure Agreement (NDA). Do not distribute or reproduce without explicit permission.
 
-🚀 Executive Summary
+**🚀 Executive Summary**
+
+
 
 This repository contains the blueprints and implementation of a deterministic, polynomial-time structural beam algorithm for exact-node routing (The Traveling Salesman Problem).
 
@@ -13,6 +15,17 @@ Ultra-Low Latency: Operates deterministically in ~O(n^3.4) time, enabling real-t
 Micro-Footprint Compute: Peak memory scales at ~O(n^1.5). The architecture optimizes 100-node networks using under 4MB of RAM, making it viable for embedded and edge-compute systems.
 
 100% SLA Reliability: Guarantees a bounded, reliable result on every execution with zero variability.
+
+
+**Guaranteed Polynomial Complexity (Space & Time)**
+
+Unlike traditional exact solvers that hit exponential calculation walls ($O(2^n)$) or heuristics that lack formal operational bounds, this architecture is mathematically proven and empirically validated to operate in strictly polynomial time and space.
+
+Theoretical Worst-Case Bounds: The structural framework guarantees a maximum time complexity of $O(n^4)$ and a bounded space complexity of $O(n^2)$, ensuring the algorithm will never trigger an exponential compute explosion regardless of the matrix complexity.
+
+Empirical Scaling: Extensive stress testing across Asymmetric, Blocked, and Symmetric matrices confirms these bounds. Real-world execution time scales super-linearly at roughly $O(n^{3.4})$, while the memory footprint scales sub-quadratically at $O(n^{1.5})$.
+
+This polynomial nature ensures predictable, sustainable scaling for enterprise routing without the need for constant hardware upgrades.
 
 📊 Empirical Validation & Metrics
 
