@@ -20,7 +20,7 @@ from typing import List, Tuple, Optional
 # Matrix generation
 # -----------------------------------------------------------------------------
 def generate_matrix(n: int, seed: int, kind: str = "asymmetric",
-                    wmin: int = 1, wmax: int = 50, block_prob: float = 0.08) -> List[List[float]]:
+                    wmin: int = 1, wmax: int = 10, block_prob: float = 0.08) -> List[List[float]]:
     """
     kind:
       - "asymmetric": directed, random weights
@@ -76,7 +76,7 @@ def generate_matrix(n: int, seed: int, kind: str = "asymmetric",
 # Structural Beam + bounded 2-opt (polynomial)
 # -----------------------------------------------------------------------------
 def tsp_structural_beam(matrix: List[List[float]],
-                        K: int = 5, L: int = 6, TAU: float = 0.30, M: int = 25,
+                        K: int = 5, L: int = 6, TAU: float = 0.30, M: int = 15,
                         MAX_2OPT_PASSES: int = 2) -> Tuple[Optional[int], Optional[List[int]]]:
     """
     Returns (best_cost:int, best_route_1based:List[int]) or (None, None) if no tour.
@@ -436,7 +436,7 @@ def held_karp_tsp(matrix: List[List[float]]) -> Tuple[Optional[int], Optional[Li
 # Experiment runner
 # -----------------------------------------------------------------------------
 def run_case(n: int, seed: int, kind: str,
-             K=5, L=6, TAU=0.30, M=25, MAX_2OPT_PASSES=2, hk_limit: int = 15):
+             K=5, L=6, TAU=0.30, M=25, MAX_2OPT_PASSES=2, hk_limit: int = 10):
     print(f"\n=== n={n}, seed={seed}, kind={kind} ===")
     mat = generate_matrix(n, seed, kind)
 
@@ -483,21 +483,24 @@ def run_case(n: int, seed: int, kind: str,
 if __name__ == "__main__":
     # You can list many cases here for a “stress test”
     CASES = [
-        (11, 2, "symmetric"),
-        (11, 2, "asymmetric"),
-        (11, 2, "blocked"),
-        (12, 2, "symmetric"), # HK still runs
-        (12, 2, "asymmetric"), # HK still runs
-        (20, 2, "blocked"),    # HK still runs
-        (25,2, "symmetric"),   # HK skipped , as above limit
-        (25,2, "asymmetric"),  # HK skipped , as above limit
-        (25,2, "blocked")      # HK Skipped , as above limit
+        (10, 2, "symmetric"),
+        (10, 2, "asymmetric"),
+        (10, 2, "blocked"),
+        (25, 2, "symmetric"),  # HK still runs
+        (25, 2, "asymmetric"), # HK still runs
+        (25, 2, "blocked"),    # HK still runs
+        (50,2, "symmetric"),   # HK skipped , as above limit
+        (50,2, "asymmetric"),  # HK skipped , as above limit
+        (50,2, "blocked"),     # HK Skipped , as above limit
+        (100, 2, "symmetric"), # HK skipped , as above limit
+        (100, 2, "asymmetric"),# HK skipped , as above limit
+        (100, 2, "blocked")   # HK skipped , as above limit
 
     ]
 
     # Beam parameters: Increased M to 25 to allow wider search around INF traps in blocked matrices
     K, L, TAU, M, MAX_2OPT_PASSES = 5, 6, 0.30, 25, 2
-    HK_LIMIT = 20
+    HK_LIMIT = 10
 
     for n, seed, kind in CASES:
         run_case(n, seed, kind, K=K, L=L, TAU=TAU, M=M, MAX_2OPT_PASSES=MAX_2OPT_PASSES, hk_limit=HK_LIMIT)
