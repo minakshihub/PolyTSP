@@ -1,0 +1,30 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch: # Allows you to run this manually
+
+jobs:
+  build:
+    runs-on: windows-latest # This tells GitHub to use a Windows server!
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install PyInstaller
+      run: pip install pyinstaller
+
+    - name: Build the EXE
+      run: pyinstaller --onefile tsp_stress_test_script.py
+
+    - name: Upload the EXE for download
+      uses: actions/upload-artifact@v3
+      with:
+        name: TSP-Stress-Test-Windows-EXE
+        path: dist/tsp_stress_test_script.exe
+        
