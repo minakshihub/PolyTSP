@@ -1,0 +1,43 @@
+name: Build C++ Binaries
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # This allows you to run it manually with a button
+
+jobs:
+  build-binaries:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Install Windows Compiler (MinGW)
+      run: sudo apt-get update && sudo apt-get install -y mingw-w64
+
+    - name: Compile for Linux
+      run: |
+        g++ -std=c++17 tsp_solver.cpp -o tsp_solver_linux
+        g++ -std=c++17 tsp_solver_interactive.cpp -o tsp_interactive_linux
+
+    - name: Compile for Windows
+      run: |
+        x86_64-w64-mingw32-g++ -std=c++17 tsp_solver.cpp -o tsp_solver_windows.exe
+        x86_64-w64-mingw32-g++ -std=c++17 tsp_solver_interactive.cpp -o tsp_interactive_windows.exe
+
+    - name: Upload Linux Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Linux-Binaries
+        path: |
+          tsp_solver_linux
+          tsp_interactive_linux
+
+    - name: Upload Windows Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Windows-Binaries
+        path: |
+          tsp_solver_windows.exe
+          tsp_interactive_windows.exe
